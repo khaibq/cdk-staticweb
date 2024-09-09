@@ -6,10 +6,10 @@ This pattern shows step-by-step how to build a static page by combination of Ama
 ![architecture diagram](./images/route53-cloudfront-s3.png)
 
 ## Requirements
-* A domain name (registered from AWS or other DNS providers).
-* Python version >=3.9 (installed and configured).
-* AWS account (The IAM user must have sufficient permissions to make necessary AWS service calls and manage AWS resources).
-* [AWS Cloud Development Kit](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) (AWS CDK Python installed).
+* **A domain name** (registered from AWS or other DNS providers).
+* **Python version >=3.9** (installed and configured).
+* **AWS account** (The IAM user must have sufficient permissions to make necessary AWS service calls and manage AWS resources).
+* [**AWS Cloud Development Kit**](https://docs.aws.amazon.com/cdk/latest/guide/cli.html) (AWS CDK Python installed).
 
 ## Prepare Route 53 hosted Zone and ACM certificate on AWS Management Console
    - Create Hosted Zone under your domain name.

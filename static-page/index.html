@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Khai Bui Resume Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts, Normalize, and Font Awesome -->
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- CSS from Web3Schools -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
+    </style>
+  </head>
+<body class="w3-light-grey">
+
+<!-- Page Container -->
+<div class="w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+
+    <!-- Left Column -->
+    <div class="w3-third">
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-container">
+          <h2 class="w3-text-custom"><b><p class="w3-xlarge w3-text-custom" id="name"></p></b></h2>
+          <hr>
+          <p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-custom"></i><b><i class="w3-text-grey-custom w3-large-custom" id="title"></i></b></p>
+          <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-custom"></i><i class="w3-text-grey-custom" id="location"></i></p>
+          <p><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-custom"></i><i class="w3-text-grey-custom" id="email"></i></p>
+          <div id="profiles"></div>
+          <hr>
+          <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-custom"></i>Skills</b></p>
+          <div id="skills"></div>
+          <br>
+          <p class="w3-large w3-text-theme"><b><i class="fa fa-globe fa-fw w3-margin-right w3-text-custom"></i>Languages</b></p>
+          <div id="languages"></div>
+          <br>
+        </div>
+      </div><br>
+
+    <!-- End Left Column -->
+    </div>
+
+    <!-- Right Column -->
+    <div class="w3-twothird">
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-list-alt fa-fw w3-margin-right w3-xxlarge w3-text-custom"></i>Summary</h2>
+        <div class="w3-container" id="summary"></div>
+      </div>
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-custom"></i>Work Experience</h2>
+        <div class="w3-container" id="workCurrent"></div>
+        <div class="w3-container" id="workPast"></div>
+      </div>
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-custom"></i>Certificates</h2>
+        <div class="w3-container" id="certificate"></div>
+      </div>
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16"><i class="fa fa-graduation-cap fa-fw w3-margin-right w3-xxlarge w3-text-custom"></i>Education</h2>
+        <div class="w3-container" id="education"></div>
+      </div>
+
+    <!-- End Right Column -->
+    </div>
+
+  <!-- End Grid -->
+  </div>
+
+  <!-- End Page Container -->
+</div>
+<script>
+  const apiUrl = 'https://jy9atsmtla.execute-api.us-east-1.amazonaws.com/prod/?tablename=ResumeApiGwStack-resumeTable6047ADD7-16NF1CVGF5TND&id=khaibq';
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(resumeData => {
+    console.log('Resume Data:', resumeData);
+
+    if (resumeData.name) document.getElementById('name').innerText = resumeData.name;
+    if (resumeData.title) document.getElementById('title').innerText = resumeData.title;
+    if (resumeData.location) document.getElementById('location').innerText = resumeData.location;
+    if (resumeData.email) document.getElementById('email').innerText = resumeData.email;
+  
+    if (resumeData.profiles) {
+      const profiles = document.getElementById("profiles");
+      const profilesContainer = document.createDocumentFragment();
+      resumeData.profiles.forEach(profile => {
+        if (profile.network && profile.url && profile.username) {
+          const p = document.createElement("p");
+          const i = document.createElement("i");
+          i.className = profile.network + " w3-hover-opacity w3-margin-right w3-large w3-text-custom";
+          const a = document.createElement("a");
+          a.href = profile.url;
+          a.target = '_blank';
+          a.innerText = profile.username;
+          p.appendChild(i);
+          p.appendChild(a);
+          profilesContainer.appendChild(p);
+        };
+      });
+      profiles.appendChild(profilesContainer);
+    };
+
+    if (resumeData.skills) {
+      const skills = document.getElementById("skills");
+      const skillsContainer = document.createDocumentFragment();
+      resumeData.skills.forEach(skill => {
+        if (skill.title && skill.score && skill.rating) {
+          const p = document.createElement("p");
+          p.innerHTML = skill.title;
+          const div = document.createElement("div");
+          div.className = "w3-light-grey w3-round-xlarge w3-small";
+          const score = document.createElement("div");
+          score.className = "w3-container w3-center w3-round-xlarge w3-custom";
+          score.style = "width:" + skill.score;
+          score.innerText = skill.rating;
+          div.appendChild(score);
+          skillsContainer.appendChild(p);
+          skillsContainer.appendChild(div);
+        };
+      });
+      skills.appendChild(skillsContainer);
+    };
+
+    if (resumeData.languages) {
+      const languages = document.getElementById("languages");
+      const languagesContainer = document.createDocumentFragment();
+      resumeData.languages.forEach(language => {
+        if (language.language && language.score && language.rating) {
+          const p = document.createElement("p");
+          p.innerHTML = language.language;
+          const div = document.createElement("div");
+          div.className = "w3-light-grey w3-round-xlarge w3-small";
+          const score = document.createElement("div");
+          score.className = "w3-container w3-center w3-round-xlarge w3-custom";
+          score.style = "width:" + language.score;
+          score.innerText = language.rating;
+          div.appendChild(score);
+          languagesContainer.appendChild(p);
+          languagesContainer.appendChild(div);
+        };
+      });
+      languages.appendChild(languagesContainer);
+    };
+  
+    if (resumeData.summary) {
+      const summary = document.getElementById("summary");
+      const summaryContainer = document.createDocumentFragment();
+      resumeData.summary.forEach(summary => {
+        if (summary.para) {
+          const p = document.createElement("p");
+          p.innerHTML = summary.para;
+          summaryContainer.appendChild(p);
+        };
+      });
+      summary.appendChild(summaryContainer);
+    };
+  
+    if (resumeData.experience.current) {
+      const workCurrent = document.getElementById("workCurrent");
+      const h5 = document.createElement("h5");
+      h5.className = "w3-opacity";
+      const b = document.createElement("b");
+      b.innerText = resumeData.experience.current.role;
+      h5.appendChild(b);
+      workCurrent.appendChild(h5);
+      const h6 = document.createElement("h6");
+      h6.className = "w3-text-custom";
+      const i = document.createElement("i");
+      i.className = "fa fa-calendar fa-fw w3-margin-right";
+      h6.appendChild(i);
+      const h6Text = document.createTextNode(resumeData.experience.current.from);
+      h6.appendChild(h6Text);
+      const span = document.createElement("span");
+      span.className = "w3-tag w3-custom w3-round";
+      span.innerText = "Current";
+      h6.appendChild(span);
+      workCurrent.appendChild(h6);
+    
+      if (resumeData.experience.current.description) {
+        const ul = document.createElement("ul");
+        const descriptionsContainer = document.createDocumentFragment();
+        const descriptions = resumeData.experience.current.description;
+        descriptions.forEach(description => {
+          if (description.li) {
+            const li = document.createElement("li");
+            li.textContent = description.li;
+            descriptionsContainer.appendChild(li);
+          };
+        });
+        ul.appendChild(descriptionsContainer);
+        workCurrent.appendChild(ul);
+      };
+    };
+  
+    if (resumeData.experience.past) {
+      const workPast = document.getElementById("workPast");
+      const workPastContainer = document.createDocumentFragment();
+      const workPastData = resumeData.experience.past;
+      workPastData.forEach(pastData => {
+        if (pastData.role && pastData.duration && pastData.description) {
+          const h5 = document.createElement("h5");
+          h5.className = "w3-opacity";
+          const b = document.createElement("b");
+          b.innerText = pastData.role;
+          h5.appendChild(b);
+          workPastContainer.appendChild(h5);
+          const h6 = document.createElement("h6");
+          h6.className = "w3-text-custom";
+          const i = document.createElement("i");
+          i.className = "fa fa-calendar fa-fw w3-margin-right";
+          h6.appendChild(i);
+          const h6Text = document.createTextNode(pastData.duration);
+          h6.appendChild(h6Text);
+          workPastContainer.appendChild(h6);
+    
+          if (pastData.description) {
+            const ul = document.createElement("ul");
+            const descriptionsContainer = document.createDocumentFragment();
+            pastData.description.forEach(description => {
+              if (description.li) {
+                const li = document.createElement("li");
+                li.textContent = description.li;
+                descriptionsContainer.appendChild(li);
+              };
+            });
+            ul.appendChild(descriptionsContainer);
+            workPastContainer.appendChild(ul);
+          };
+        };
+      });
+      workPast.appendChild(workPastContainer);
+    };
+
+    if (resumeData.certificates) {
+      const certificate = document.getElementById("certificate");
+      const certificateContainer = document.createDocumentFragment();
+      resumeData.certificates.forEach(cert => {
+        if (cert.title && cert.valid && cert.link && cert.description) {
+          const h5 = document.createElement("h5");
+          h5.className = "w3-opacity";
+          const a = document.createElement("a");
+          a.href = cert.link;
+          a.target = "_blank";
+          const b = document.createElement("b");
+          const aText = document.createTextNode(cert.title);
+          b.appendChild(aText);
+          a.appendChild(b);
+          h5.appendChild(a);
+          certificateContainer.appendChild(h5);
+          const h6 = document.createElement("h6");
+          h6.className = "w3-text-custom";
+          const i = document.createElement("i");
+          i.className = "fa fa-calendar fa-fw w3-margin-right";
+          h6.appendChild(i);
+          const validText = document.createTextNode(cert.valid);
+          h6.appendChild(validText);
+          certificateContainer.appendChild(h6);
+          const p = document.createElement("p");
+          p.innerText = cert.description;
+          certificateContainer.appendChild(p);
+        };
+      });
+      certificate.appendChild(certificateContainer);
+    };
+
+    if (resumeData.education) {
+      const education = document.getElementById("education");
+      const educationContainer = document.createDocumentFragment();
+      resumeData.education.forEach(edu => {
+        if (edu.title && edu.valid && edu.description) {
+          const h5 = document.createElement("h5");
+          h5.className = "w3-opacity";
+          const b = document.createElement("b");
+          const bText = document.createTextNode(edu.title);
+          b.appendChild(bText);
+          h5.appendChild(b);
+          educationContainer.appendChild(h5);
+          const h6 = document.createElement("h6");
+          h6.className = "w3-text-custom";
+          const i = document.createElement("i");
+          i.className = "fa fa-calendar fa-fw w3-margin-right";
+          h6.appendChild(i);
+          const validText = document.createTextNode(edu.valid);
+          h6.appendChild(validText);
+          educationContainer.appendChild(h6);
+          const p = document.createElement("p");
+          p.innerText = edu.description;
+          educationContainer.appendChild(p);
+        };
+      });
+      education.appendChild(educationContainer);
+    };
+  });
+</script>
+</body>
+</html>

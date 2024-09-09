@@ -1,0 +1,14 @@
+.w3-text-custom, .w3-hover-text-custom:hover, .w3-text-custom, .w3-hover-text-custom:hover {
+    color:#911a11!important
+}
+.w3-custom, .w3-hover-custom:hover {
+    color:#fff!important;
+    background-color:#b04a43!important
+}
+.w3-large-custom {
+    font-size:15px!important
+}
+.w3-text-grey-custom {
+    color:#757575!important;
+    font-style: normal
+}
